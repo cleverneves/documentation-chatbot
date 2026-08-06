@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import PersonIcon from "@mui/icons-material/Person";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import { SourceReferences } from "./SourceReferences";
 import type { Message } from "../types";
 
 interface MessageBubbleProps {
@@ -38,6 +39,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
           {message.content}
         </Typography>
+        {!isUser && message.sources && message.sources.length > 0 && (
+          <SourceReferences sources={message.sources} />
+        )}
       </Paper>
 
       {isUser && (
