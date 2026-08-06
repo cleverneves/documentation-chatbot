@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_LLM_MODEL=${OPENAI_LLM_MODEL:-gpt-4o-mini}
+      - OPENAI_EMBEDDING_MODEL=${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
+      - CHROMA_PERSIST_DIR=/app/data/chroma
+      - CHROMA_COLLECTION_NAME=${CHROMA_COLLECTION_NAME:-documentation}
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost:5173}
+      - DOCS_DIR=/app/docs
+      - RAG_TOP_K=${RAG_TOP_K:-4}
+    volumes:
+      - chroma_data:/app/data/chroma
+      - ./docs:/app/docs:ro
+    networks:
+      - chatbot-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000}
+    ports:
+      - "4173:4173"
+    depends_on:
+      - backend
+    networks:
+      - chatbot-network
+
+networks:
+  chatbot-network:
+    driver: bridge
+
+volumes:
+  chroma_data:

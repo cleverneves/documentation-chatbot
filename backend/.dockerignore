@@ -1,0 +1,8 @@
+.venv
+venv
+__pycache__
+*.pyc
+data/chroma
+.pytest_cache
+.mypy_cache
+.git
