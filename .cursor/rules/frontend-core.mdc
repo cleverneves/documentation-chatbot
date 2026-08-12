@@ -1,0 +1,144 @@
+---
+description: Core rules for the React frontend MVP
+globs: ["frontend/src/**/*.{ts,tsx}"]
+alwaysApply: true
+---
+
+# Frontend Core
+
+## Context
+
+This project is an MVP for studying and implementing a documentation chatbot.
+
+Frontend stack:
+
+- React
+- TypeScript
+- Material UI
+
+Backend:
+
+- FastAPI
+
+RAG:
+
+- LlamaIndex
+
+The frontend communicates only with the FastAPI backend.
+
+## MVP Principle
+
+Prioritize:
+
+1. Simplicity
+2. Readability
+3. Fast implementation
+4. Type safety
+5. Maintainability
+6. Good user experience
+
+Do not introduce enterprise-level architecture unless there is a concrete requirement.
+
+Avoid premature abstractions.
+
+## Architecture
+
+Prefer a simple structure:
+
+frontend/
+└── src/
+   ├── components/
+   ├── pages/
+   ├── hooks/
+   ├── services/
+   ├── types/
+   ├── theme/
+   ├── App.tsx
+   └── main.tsx
+
+Create additional directories only when they provide clear value.
+
+## Components
+
+Use small, focused functional components.
+
+A component should have a clear responsibility.
+
+Avoid:
+
+- Giant components
+- Deeply nested JSX
+- Duplicated UI logic
+- Unnecessary wrapper components
+- Generic abstractions without reuse
+
+## State
+
+Prefer local React state.
+
+Do not introduce Redux, Zustand or another state management library unless the MVP has a concrete requirement for it.
+
+Keep state as close as possible to where it is used.
+
+## Business Logic
+
+Keep complex logic outside presentation components.
+
+Prefer:
+
+Component
+    ↓
+Custom Hook
+    ↓
+Service
+    ↓
+FastAPI
+
+Simple UI state can remain inside the component.
+
+## Code Quality
+
+Prefer explicit and readable code.
+
+Avoid:
+
+- `any`
+- Dead code
+- Unused imports
+- Magic values
+- Unnecessary comments
+- Unnecessary abstractions
+- Unnecessary dependencies
+
+Do not refactor unrelated code while implementing a feature.
+
+## Accessibility
+
+Interactive elements must be keyboard accessible.
+
+Forms must have accessible labels.
+
+Icon-only buttons must have accessible labels.
+
+Do not use color as the only way to communicate state.
+
+## Responsive Design
+
+The application must work on:
+
+- Mobile
+- Tablet
+- Desktop
+
+Prefer responsive Material UI layout primitives and breakpoints.
+
+## Error Handling
+
+User-facing operations must handle:
+
+- Loading
+- Success
+- Empty
+- Error
+
+Do not expose internal exceptions or stack traces to users.
