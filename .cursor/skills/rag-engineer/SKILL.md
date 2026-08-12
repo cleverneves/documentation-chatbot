@@ -1,71 +1,131 @@
 ---
 name: rag-engineer
-description: Especialista em implementação de sistemas RAG utilizando LlamaIndex
+description: Design and implement the LlamaIndex RAG pipeline using ChromaDB and OpenAI for the documentation chatbot.
 ---
 
-# RAG Engineer Skill
+# RAG Engineer
 
-## Objetivo
+## Role
 
-Implementar pipelines RAG simples, eficientes e testáveis utilizando LlamaIndex.
+Act as a senior engineer specialized in Retrieval-Augmented Generation.
 
-## Knowledge
+Stack:
 
-Conhecer e aplicar:
+- Python
+- LlamaIndex
+- ChromaDB
+- OpenAI
 
-- Document loading
-- Document parsing
-- Chunking
-- Metadata
-- Embeddings
-- Vector stores
-- Retrieval
-- Similarity search
-- Reranking
-- Context construction
-- LLM generation
+## Objective
 
-## Ingestion Pipeline
+Build a simple, grounded RAG pipeline for querying the project's documentation.
 
-Sempre considerar:
+## Pipeline
+
+The expected pipeline is:
 
 Documents
     ↓
-Parsing
+Load
     ↓
-Chunking
+Chunk
     ↓
-Metadata
+Embed
     ↓
-Embeddings
+ChromaDB
     ↓
-Vector Store
-
-## Query Pipeline
-
-Question
+Retrieve
     ↓
-Retrieval
-    ↓
-Relevant Context
-    ↓
-Prompt
+Context
     ↓
 LLM
     ↓
 Response
 
-## Guidelines
+## Document Ingestion
 
-- Não utilizar agentes quando um RAG tradicional resolver o problema.
-- Não adicionar reranking sem necessidade.
-- Não criar abstrações prematuras.
-- Manter ingestion e query pipelines separados.
-- Sempre preservar metadata das fontes.
-- A resposta deve ser baseada no contexto recuperado.
+Documents are located under:
+
+docs/
+
+The ingestion process should:
+
+1. Discover supported documents.
+2. Load them.
+3. Split them appropriately.
+4. Generate embeddings.
+5. Store vectors.
+6. Preserve useful metadata.
+
+## Metadata
+
+Whenever possible preserve:
+
+- Source filename
+- Document title
+- Section
+- Page or location when available
+
+Do not invent metadata.
+
+## Retrieval
+
+Retrieval should return relevant chunks based on the user question.
+
+Keep retrieval configuration explicit.
+
+Example configuration:
+
+- top_k
+- embedding model
+- similarity settings
+
+## Generation
+
+The LLM should answer based primarily on retrieved context.
+
+If context is insufficient, prefer an explicit limitation rather than hallucinating.
+
+## Sources
+
+The RAG pipeline should return source metadata together with the generated answer whenever possible.
 
 ## LlamaIndex
 
-Priorizar as abstrações nativas do LlamaIndex.
+Prefer native LlamaIndex abstractions.
 
-Evitar implementar manualmente funcionalidades que já existem na biblioteca.
+Do not introduce LangChain.
+
+## ChromaDB
+
+Use ChromaDB through a clear abstraction or LlamaIndex integration.
+
+Do not spread vector-store implementation throughout the backend.
+
+## OpenAI
+
+OpenAI credentials must be read from environment variables.
+
+Never hardcode credentials.
+
+## Evaluation
+
+When changing retrieval behavior, validate:
+
+- Relevance of retrieved chunks
+- Answer grounding
+- Source correctness
+- Response quality
+
+## MVP Constraints
+
+Do not introduce unless justified:
+
+- Agents
+- Reranking
+- Query rewriting
+- Hybrid retrieval
+- Multi-step retrieval
+- Complex evaluation frameworks
+
+Start with a simple RAG pipeline.
