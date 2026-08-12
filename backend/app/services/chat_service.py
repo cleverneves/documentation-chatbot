@@ -32,6 +32,8 @@ def answer_question(question: str) -> ChatAnswer:
 
     configure_llama_index()
 
+    logger.info("Pergunta recebida (%d caractere(s)).", len(question))
+
     try:
         query_engine = get_query_engine()
         response = query_engine.query(question)
@@ -49,5 +51,7 @@ def answer_question(question: str) -> ChatAnswer:
         )
         for node in response.source_nodes
     ]
+
+    logger.info("Resposta gerada com %d trecho(s) de origem recuperado(s).", len(sources))
 
     return ChatAnswer(answer=str(response), sources=sources)
