@@ -1,0 +1,111 @@
+---
+description: FastAPI implementation and API design rules
+globs: ["backend/**/*.py"]
+alwaysApply: true
+---
+
+# FastAPI
+
+## API Design
+
+Use FastAPI for HTTP endpoints.
+
+Endpoints should be thin.
+
+Prefer:
+
+Endpoint
+    ↓
+Service
+    ↓
+RAG
+
+Avoid putting orchestration logic directly in route handlers.
+
+## Schemas
+
+Use Pydantic models for:
+
+- Request bodies
+- Response bodies
+- Configuration when appropriate
+
+Do not return unstructured dictionaries when a response schema provides useful type safety.
+
+## Validation
+
+Validate user input at the API boundary.
+
+Invalid input should return appropriate HTTP errors.
+
+## Response Models
+
+Define explicit response models.
+
+Example:
+
+class ChatRequest(BaseModel):
+    question: str
+
+
+class ChatResponse(BaseModel):
+    answer: str
+    sources: list[Source]
+
+## HTTP Methods
+
+Use HTTP semantics correctly.
+
+POST:
+
+Operations that create or execute an operation.
+
+GET:
+
+Read-only operations.
+
+## Status Codes
+
+Use meaningful HTTP status codes.
+
+Examples:
+
+200
+Successful operation
+
+201
+Resource created
+
+400
+Invalid request
+
+404
+Resource not found
+
+422
+Validation error
+
+500
+Unexpected server error
+
+## Dependencies
+
+Use FastAPI dependency injection when it provides clear value.
+
+Do not create dependencies solely for abstraction.
+
+## Async
+
+Use async endpoints when the underlying operation is asynchronous.
+
+Do not use async merely because FastAPI supports it.
+
+## Documentation
+
+FastAPI's OpenAPI documentation should remain useful.
+
+Use clear:
+
+- Endpoint names
+- Schema names
+- Field descriptions
