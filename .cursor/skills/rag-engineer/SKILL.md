@@ -7,8 +7,7 @@ description: Especialista em implementação de sistemas RAG utilizando LlamaInd
 
 ## Objetivo
 
-Implementar pipelines RAG simples, eficientes e testáveis
-utilizando LlamaIndex.
+Implementar pipelines RAG simples, eficientes e testáveis utilizando LlamaIndex.
 
 ## Knowledge
 
