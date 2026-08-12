@@ -20,8 +20,10 @@ backend/
 ├── scripts/
 │   └── ingest.py            # CLI para indexar docs/
 ├── tests/
+│   ├── api/                  # testes do endpoint /chat (service mockado)
 │   └── integration/         # testes de integração (com MockEmbedding)
 ├── requirements.txt
+├── requirements-dev.txt     # dependências de teste (pytest)
 └── Dockerfile
 ```
 
@@ -50,6 +52,8 @@ backend/
    | `CHROMA_COLLECTION_NAME` | Nome da coleção no ChromaDB | `documentation` |
    | `DOCS_DIR` | Diretório com os documentos a indexar | `../docs` |
    | `RAG_TOP_K` | Quantidade de trechos recuperados por pergunta | `4` |
+   | `RAG_CHUNK_SIZE` | Tamanho (em tokens) de cada chunk de documento | `512` |
+   | `RAG_CHUNK_OVERLAP` | Sobreposição entre chunks consecutivos | `64` |
    | `CORS_ALLOWED_ORIGINS` | Origens permitidas (separadas por vírgula) | `http://localhost:5173` |
 
 ## Instalação
@@ -101,5 +105,9 @@ A documentação interativa fica disponível em `http://localhost:8000/docs`.
 pytest
 ```
 
-Os testes de integração usam `MockEmbedding` do LlamaIndex, portanto não fazem chamadas reais
-à API da OpenAI nem exigem uma chave válida.
+- `tests/api/`: testes do endpoint `POST /api/v1/chat` (sucesso, validação e erro), com o
+  `chat_service` substituído via `dependency_overrides` do FastAPI.
+- `tests/integration/`: ingestão ponta a ponta usando `MockEmbedding` do LlamaIndex.
+
+Nenhum teste faz chamadas reais à API da OpenAI, ao LlamaIndex ou ao ChromaDB, portanto não é
+necessária uma chave válida para rodá-los.

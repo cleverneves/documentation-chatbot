@@ -38,6 +38,19 @@ Resumo rápido:
 docker-compose up --build
 ```
 
+O serviço `backend` expõe um healthcheck em `/health`; o `frontend` só inicia depois que o
+backend estiver saudável.
+
+## Testes e qualidade
+
+| Onde | Comando | O que cobre |
+|---|---|---|
+| `backend/` | `pytest` | Endpoint de chat (`tests/api/`) e ingestão ponta a ponta (`tests/integration/`) |
+| `frontend/` | `npm run test` | Chat: `chatApi`, `useChat`, `ChatInput`, `ChatWindow`, `SourceReferences` |
+| `frontend/` | `npm run lint` | ESLint (React + TypeScript) |
+
+Nenhum teste depende de chamadas reais à OpenAI, ao LlamaIndex ou ao ChromaDB.
+
 ## Documentação adicional
 
 - [`backend/README.md`](backend/README.md): setup do backend, ingestão de documentos e endpoints da API.

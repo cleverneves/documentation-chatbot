@@ -19,6 +19,13 @@ frontend/
 │   │   └── types.ts
 │   ├── services/chatApi.ts        # client HTTP para o backend
 │   └── config/env.ts              # variáveis de ambiente (Vite)
+├── tests/
+│   ├── components/                # ChatWindow, ChatInput, SourceReferences
+│   ├── hooks/                     # useChat
+│   ├── services/                  # chatApi
+│   └── setupTests.ts
+├── eslint.config.js
+├── vitest.config.ts
 └── Dockerfile
 ```
 
@@ -53,4 +60,20 @@ A aplicação fica disponível em `http://localhost:5173`.
 ```
 npm run build
 npm run preview
+```
+
+## Testes
+
+```
+npm run test
+```
+
+Testes com **Vitest** + **React Testing Library** cobrindo `chatApi`, `useChat`, `ChatInput`,
+`ChatWindow` e `SourceReferences` (estados de loading, sucesso, erro, vazio e fontes). Toda
+chamada HTTP é mockada — nenhum teste depende do backend real ou de rede.
+
+## Lint
+
+```
+npm run lint
 ```
