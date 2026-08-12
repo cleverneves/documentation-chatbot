@@ -1,0 +1,125 @@
+---
+description: Defines the architecture and boundaries of the documentation chatbot monorepo
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Project Architecture
+
+## Project
+
+This repository is a monorepo for a documentation consultation chatbot.
+
+The project is an MVP intended for practical learning and experimentation.
+
+## Repository Structure
+
+The repository contains:
+
+backend/
+    FastAPI API and RAG pipeline
+
+frontend/
+    React + TypeScript + Material UI SPA
+
+docs/
+    Knowledge documents used by the RAG pipeline
+
+infra/
+    Auxiliary infrastructure configuration
+
+docker-compose.yml
+    Local development orchestration
+
+## Responsibilities
+
+### Frontend
+
+Responsible for:
+
+- User interface
+- Chat interaction
+- Conversation presentation
+- User input
+- API communication
+- Loading and error states
+- Source presentation
+
+The frontend must not implement RAG logic.
+
+### Backend
+
+Responsible for:
+
+- HTTP API
+- Request validation
+- Application orchestration
+- RAG execution
+- LlamaIndex integration
+- ChromaDB integration
+- LLM integration
+
+### Docs
+
+Contains source documents used by the knowledge pipeline.
+
+The frontend must never directly consume files from `docs/`.
+
+### Infra
+
+Contains infrastructure and local development configuration.
+
+Infrastructure concerns must not leak into frontend components.
+
+## Dependency Direction
+
+Preferred dependency flow:
+
+frontend
+    ↓
+backend API
+    ↓
+RAG service
+    ↓
+LlamaIndex
+    ↓
+ChromaDB / LLM
+
+Do not reverse these dependencies.
+
+The frontend must not import code from:
+
+- backend/
+- infra/
+- docs/
+
+The backend must not depend on frontend implementation details.
+
+## Shared Contracts
+
+If the frontend requires backend data:
+
+1. Inspect the backend API contract.
+2. Define the corresponding TypeScript type.
+3. Implement the service integration.
+4. Keep the contract boundary explicit.
+
+Do not copy backend implementation code into the frontend.
+
+## Changes Across Boundaries
+
+When a feature requires changes to both frontend and backend:
+
+1. Understand the existing API.
+2. Define the API contract.
+3. Implement backend behavior.
+4. Implement frontend integration.
+5. Validate both sides.
+
+Do not modify the API contract casually.
+
+## Architecture Principle
+
+Prefer the simplest architecture that solves the current MVP requirement.
+
+Do not introduce distributed architecture, complex patterns, or unnecessary abstractions.
