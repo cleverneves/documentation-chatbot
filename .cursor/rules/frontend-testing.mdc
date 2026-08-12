@@ -1,0 +1,84 @@
+---
+description: Testing rules for the React frontend
+globs: ["frontend/**/*.{ts,tsx}", "frontend/**/package.json"]
+alwaysApply: false
+---
+
+# Frontend Testing
+
+## Objective
+
+Tests should validate important user-visible behavior.
+
+Do not optimize for coverage percentage alone.
+
+## Priority
+
+Prioritize tests for:
+
+1. Chat interaction
+2. API integration behavior
+3. Loading state
+4. Error state
+5. Empty state
+6. Source rendering
+7. Input validation
+8. Critical user flows
+
+## Component Tests
+
+Test behavior rather than implementation details.
+
+Prefer testing:
+
+- What users see
+- What users click
+- What users type
+- What happens after an API response
+
+Avoid testing private implementation details.
+
+## Queries
+
+Prefer accessible queries:
+
+- getByRole
+- getByLabelText
+- getByText
+
+Avoid brittle CSS selectors.
+
+## API
+
+Never use the real backend in unit/component tests unless explicitly creating an integration test.
+
+Mock HTTP communication.
+
+Tests must not require:
+
+- LlamaIndex
+- ChromaDB
+- OpenAI
+- External network access
+
+## Async Behavior
+
+Tests must explicitly handle:
+
+- Loading
+- Success
+- Error
+
+Avoid arbitrary timeouts.
+
+Prefer waiting for observable UI changes.
+
+## Regression Tests
+
+When fixing a bug, add a regression test when practical.
+
+## Test Quality
+
+A test should fail when the user-visible behavior is broken.
+
+Avoid tests that only verify that a function was called without validating the resulting behavior.
