@@ -1,0 +1,142 @@
+---
+description: Core rules for the LlamaIndex RAG pipeline
+globs: ["backend/**/*.{py}", "rag/**/*.py"]
+alwaysApply: true
+---
+
+# RAG Core
+
+## Context
+
+The project implements a Retrieval-Augmented Generation pipeline using:
+
+- LlamaIndex
+- ChromaDB
+- OpenAI
+
+The RAG pipeline is responsible for answering questions using the project's documentation.
+
+## Architecture
+
+The conceptual pipeline is:
+
+Documents
+    ↓
+Document Loading
+    ↓
+Chunking
+    ↓
+Embeddings
+    ↓
+ChromaDB
+    ↓
+Retrieval
+    ↓
+Context
+    ↓
+LLM
+    ↓
+Answer
+
+## Responsibilities
+
+The RAG layer is responsible for:
+
+- Document ingestion
+- Indexing
+- Embeddings
+- Vector storage
+- Retrieval
+- Context construction
+- LLM interaction
+- Source attribution
+
+## Backend Boundary
+
+The FastAPI layer exposes the RAG functionality through an API.
+
+The frontend must never access the RAG implementation directly.
+
+## LlamaIndex
+
+Use LlamaIndex as the primary framework for RAG orchestration.
+
+Do not introduce LangChain unless explicitly required.
+
+## ChromaDB
+
+ChromaDB is the vector store.
+
+Do not access ChromaDB directly from the frontend.
+
+Keep vector-store configuration isolated from API code.
+
+## OpenAI
+
+OpenAI credentials must remain server-side.
+
+Never expose API keys through API responses or frontend configuration.
+
+## Retrieval
+
+Retrieval configuration must be explicit.
+
+Important parameters include:
+
+- Number of retrieved chunks
+- Similarity configuration
+- Embedding model
+- LLM model
+
+Do not tune these values arbitrarily.
+
+## Sources
+
+The RAG response should preserve source information whenever available.
+
+Sources should allow the frontend to explain where the answer originated.
+
+Do not fabricate source metadata.
+
+## Hallucination
+
+The system should prefer grounded answers.
+
+When the retrieved context does not contain enough information, the application should avoid confidently inventing an answer.
+
+## Prompting
+
+Prompts should prioritize:
+
+1. Retrieved context
+2. User question
+3. Clear answer
+4. Source attribution
+
+Do not place secrets in prompts.
+
+## Observability
+
+During development, it should be possible to understand:
+
+- Query
+- Retrieval result count
+- Processing failures
+- LLM failures
+
+Do not log sensitive information.
+
+## Simplicity
+
+This is an MVP.
+
+Do not introduce:
+
+- Multiple retrieval strategies
+- Agents
+- Complex reranking
+- Query rewriting
+- Hybrid search
+- Multi-vector retrieval
+
+unless there is a demonstrated requirement.
