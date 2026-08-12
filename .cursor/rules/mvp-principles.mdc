@@ -1,0 +1,91 @@
+---
+description: Principles for keeping the project simple and focused on MVP goals
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# MVP Principles
+
+## Objective
+
+This project is an MVP for learning and applying:
+
+- React
+- FastAPI
+- RAG
+- LlamaIndex
+- ChromaDB
+- LLM integration
+
+The primary objective is learning through implementation.
+
+## Simplicity
+
+Prefer the simplest solution that satisfies the requirement.
+
+Before introducing a new abstraction, ask:
+
+- Is it necessary?
+- Is it reused?
+- Does it solve a current problem?
+- Does it significantly improve maintainability?
+
+If not, do not introduce it.
+
+## Avoid Overengineering
+
+Do not introduce without a concrete requirement:
+
+- Microservices
+- Event-driven architecture
+- Message brokers
+- Complex state management
+- Repository patterns
+- Dependency injection frameworks
+- Complex caching
+- Service meshes
+- Kubernetes
+- Complex observability stacks
+- Enterprise design patterns
+
+## Dependencies
+
+Every new dependency must have a concrete justification.
+
+Prefer existing dependencies and platform capabilities.
+
+## Refactoring
+
+Do not refactor unrelated code while implementing a feature.
+
+Refactor only when:
+
+- Required for the feature
+- Required to fix a bug
+- Required to remove significant duplication
+- Required to maintainability
+
+## Feature Scope
+
+Implement only what is required.
+
+Do not add:
+
+- Future features
+- Speculative abstractions
+- Optional configuration
+- Unrequested UI behavior
+
+## Learning Value
+
+When choosing between two implementations with similar complexity, prefer the one that provides greater practical learning value while remaining production-reasonable.
+
+## Definition of Done
+
+A feature is complete when:
+
+- It satisfies the requirement.
+- It integrates correctly with existing components.
+- Type checks pass.
+- Relevant tests pass.
+- No unnecessary complexity was introduced.
