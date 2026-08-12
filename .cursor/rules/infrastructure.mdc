@@ -1,0 +1,76 @@
+---
+description: Infrastructure rules for local development and Docker
+globs: ["infra/**/*", "docker-compose.yml", "**/Dockerfile", "**/*.yaml", "**/*.yml"]
+alwaysApply: false
+---
+
+# Infrastructure
+
+## Context
+
+Infrastructure exists to support local development of the MVP.
+
+## Docker
+
+Docker should provide reproducible local development.
+
+Services should have:
+
+- Clear names
+- Explicit ports
+- Environment configuration
+- Health checks when useful
+
+## Docker Compose
+
+docker-compose.yml should orchestrate only services required by the MVP.
+
+Avoid adding infrastructure without a concrete requirement.
+
+## Environment
+
+Secrets must be provided through environment variables.
+
+Use:
+
+.env
+
+for local secrets.
+
+Use:
+
+.env.example
+
+as a safe template.
+
+Never commit real secrets.
+
+## Persistence
+
+If ChromaDB requires persistent storage, use a Docker volume.
+
+Do not depend on container filesystem persistence.
+
+## Networking
+
+Services should communicate using Docker service names when running inside Docker Compose.
+
+Avoid hardcoding container IP addresses.
+
+## Development
+
+Prefer simple local commands.
+
+Infrastructure should be understandable by a developer without requiring specialized operational knowledge.
+
+## MVP
+
+Do not introduce:
+
+- Kubernetes
+- Terraform
+- Service mesh
+- Cloud infrastructure
+- Distributed tracing
+
+unless explicitly required by the project.
