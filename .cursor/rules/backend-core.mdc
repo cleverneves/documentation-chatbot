@@ -1,0 +1,108 @@
+---
+description: Core architectural rules for the FastAPI backend
+globs: ["backend/**/*.py"]
+alwaysApply: true
+---
+
+# Backend Core
+
+## Context
+
+The backend is a FastAPI application responsible for exposing the HTTP API and orchestrating application operations.
+
+The backend integrates with the RAG layer.
+
+## Responsibilities
+
+The backend is responsible for:
+
+- HTTP API
+- Request validation
+- Response serialization
+- Application orchestration
+- Error handling
+- Configuration
+- Dependency management
+- Integration with RAG services
+
+The backend must not contain frontend concerns.
+
+## Architecture
+
+Prefer a simple structure:
+
+backend/
+├── app/
+│   ├── api/
+│   ├── services/
+│   ├── models/
+│   ├── schemas/
+│   ├── core/
+│   └── main.py
+└── tests/
+
+Do not introduce additional architectural layers unless required.
+
+## Separation of Concerns
+
+Prefer:
+
+API
+ ↓
+Service
+ ↓
+RAG / Domain Logic
+
+API endpoints should not contain complex business logic.
+
+## MVP
+
+Avoid:
+
+- Excessive abstractions
+- Repository patterns without persistence requirements
+- Complex dependency injection
+- Microservices
+- Event-driven architecture
+- Unnecessary interfaces
+
+## Error Handling
+
+API errors must be predictable.
+
+Do not expose internal exceptions or stack traces to clients.
+
+Return appropriate HTTP status codes.
+
+## Configuration
+
+Configuration must come from environment variables or configuration files.
+
+Never hardcode:
+
+- API keys
+- Credentials
+- URLs that vary by environment
+- Secrets
+
+## Logging
+
+Log relevant application events.
+
+Do not log:
+
+- API keys
+- Secrets
+- Sensitive user data
+- Complete credentials
+
+## Testing
+
+Critical backend behavior should have automated tests.
+
+Prioritize:
+
+- API endpoints
+- Validation
+- Error handling
+- RAG integration boundaries
