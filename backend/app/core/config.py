@@ -29,6 +29,8 @@ class Settings(BaseSettings):
     # RAG
     docs_dir: str = "../docs"
     rag_top_k: int = 4
+    rag_chunk_size: int = 512
+    rag_chunk_overlap: int = 64
 
     @property
     def cors_allowed_origins_list(self) -> list[str]:
