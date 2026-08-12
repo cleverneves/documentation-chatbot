@@ -1,0 +1,129 @@
+---
+description: Rules for integrating the React frontend with the FastAPI backend
+globs: ["src/services/**/*.{ts,tsx}", "src/hooks/**/*.{ts,tsx}", "src/types/**/*.{ts,tsx}"]
+alwaysApply: true
+---
+
+# API Integration
+
+## Architecture
+
+The frontend communicates with the backend through HTTP APIs.
+
+Architecture:
+
+React
+  ↓
+Service / Hook
+  ↓
+FastAPI
+  ↓
+RAG Service
+  ↓
+LlamaIndex
+
+The frontend must not directly communicate with the RAG implementation.
+
+## Frontend Boundary
+
+The frontend must NOT contain:
+
+- LlamaIndex
+- LangChain
+- Embedding generation
+- Chunking
+- Retrieval
+- Vector database clients
+- LLM SDKs
+- Prompt orchestration
+
+These concerns belong to the backend/RAG layer.
+
+## API Services
+
+Centralize HTTP communication in services.
+
+Example:
+
+services/
+└── chatService.ts
+
+Components must not contain raw HTTP requests.
+
+Avoid:
+
+fetch(...)
+axios.post(...)
+
+directly inside React components.
+
+## API Types
+
+Represent the FastAPI API contract with TypeScript types.
+
+Example:
+
+interface ChatRequest {
+  question: string;
+}
+
+interface ChatResponse {
+  answer: string;
+  sources: Source[];
+}
+
+## Contract First
+
+Before implementing an API integration:
+
+1. Inspect the FastAPI endpoint.
+2. Understand the request schema.
+3. Understand the response schema.
+4. Identify possible errors.
+5. Implement the TypeScript contract.
+
+Do not invent API fields.
+
+If the contract is unclear, ask for clarification.
+
+## Errors
+
+Transform API errors into user-friendly UI states.
+
+Never expose:
+
+- Stack traces
+- Internal exceptions
+- Database errors
+- LlamaIndex exceptions
+- LLM provider errors
+
+## Loading
+
+RAG operations can take longer than normal API requests.
+
+The UI must explicitly communicate when the assistant is generating an answer.
+
+## Sources
+
+If the API returns source information, expose it in the UI.
+
+Sources should be visually separated from the generated answer.
+
+## Streaming
+
+If the backend provides streaming:
+
+- Keep streaming implementation isolated from UI components.
+- Encapsulate it in a service or custom hook.
+- Do not implement low-level streaming logic inside JSX.
+
+The component should consume a simple abstraction such as:
+
+useChat()
+
+## Authentication
+
+Do not implement authentication assumptions unless the FastAPI backend exposes authentication.
+
+Do not add authentication libraries without a concrete requirement.
