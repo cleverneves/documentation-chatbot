@@ -1,0 +1,157 @@
+---
+description: Material UI rules for the frontend
+globs: ["src/**/*.{ts,tsx}"]
+alwaysApply: true
+---
+
+# Material UI
+
+## UI Library
+
+Material UI is the primary UI library.
+
+Prefer MUI components over custom UI implementations.
+
+Use existing components such as:
+
+- Button
+- TextField
+- Typography
+- Stack
+- Box
+- Container
+- Card
+- Alert
+- Snackbar
+- CircularProgress
+- IconButton
+- Dialog
+- Divider
+- Paper
+
+when appropriate.
+
+Do not introduce another UI framework.
+
+## Styling
+
+Prefer the `sx` prop for component-specific styles.
+
+Example:
+
+<Box
+  sx={{
+    display: "flex",
+    gap: 2,
+  }}
+/>
+
+Use the theme for global design decisions.
+
+## Theme
+
+Global visual decisions belong in the Material UI theme.
+
+The theme should define:
+
+- Colors
+- Typography
+- Spacing
+- Border radius
+- Breakpoints
+- Component defaults
+
+Avoid duplicating global design values.
+
+## Layout
+
+Prefer:
+
+Stack
+
+for simple vertical or horizontal layouts.
+
+Use:
+
+Grid
+
+when a responsive two-dimensional layout is required.
+
+Use:
+
+Box
+
+for generic layout and styling.
+
+Avoid unnecessary wrappers.
+
+## Typography
+
+Use Material UI Typography.
+
+Prefer:
+
+<Typography variant="h1">
+  Documentation Chat
+</Typography>
+
+instead of manually styling headings.
+
+## Responsive Design
+
+Use Material UI breakpoints.
+
+Example:
+
+sx={{
+  width: {
+    xs: "100%",
+    md: 600,
+  },
+}}
+
+Avoid fixed dimensions when responsive behavior is expected.
+
+## Forms
+
+Use MUI form components.
+
+Forms must provide:
+
+- Labels
+- Validation
+- Error feedback
+- Disabled state when appropriate
+- Loading state when submitting
+
+## Chat UI
+
+For chat messages:
+
+- Clearly distinguish user and assistant messages
+- Maintain readable line length
+- Preserve response formatting
+- Make sources visually distinguishable
+- Provide clear loading feedback
+
+The assistant response must remain readable even for long answers.
+
+## Accessibility
+
+Icon-only controls must provide:
+
+aria-label
+
+Example:
+
+<IconButton aria-label="Enviar pergunta">
+  ...
+</IconButton>
+
+Do not assume that MUI automatically guarantees accessibility.
+
+## Icons
+
+Prefer MUI Icons when available.
+
+Do not manually create SVG icons without a concrete requirement.
