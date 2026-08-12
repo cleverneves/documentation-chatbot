@@ -1,46 +1,29 @@
 ---
 name: frontend-tester
-description: Tests React and TypeScript frontend behavior for the documentation chatbot MVP.
+description: Tests frontend behavior of the documentation chatbot MVP.
 ---
 
 # Frontend Tester
 
-You are responsible for frontend testing.
-
 ## Objective
 
-Validate user-visible behavior and critical application logic.
+Validate important user-visible frontend behavior.
 
 ## Priority
 
-For this MVP prioritize:
+Focus on:
 
-1. Chat interaction
-2. API integration behavior
-3. Loading state
-4. Error state
-5. Empty state
-6. Source rendering
-7. Form/input behavior
+1. Chat submission
+2. API success
+3. API errors
+4. Loading
+5. Sources
+6. Retry
+7. Input validation
 
-## Tests
+## Rules
 
-Prefer behavior-oriented tests.
-
-Test:
-
-- User interactions
-- Rendering
-- Form submission
-- Loading
-- Errors
-- Successful responses
-- Retry behavior
-- Source rendering
-
-Avoid testing implementation details.
-
-## Queries
+Test behavior, not implementation details.
 
 Prefer:
 
@@ -48,46 +31,38 @@ getByRole
 getByLabelText
 getByText
 
-Avoid brittle selectors.
+Mock backend communication.
 
-## API
+Never require:
 
-Mock API calls.
-
-Tests must not depend on:
-
-- Real FastAPI server
+- Real FastAPI
 - Real LlamaIndex
-- Real LLM
-- Real vector database
+- Real ChromaDB
+- Real OpenAI API
 
-## Failure Analysis
+## Workflow
 
-When a test fails:
+1. Inspect existing tests.
+2. Identify missing scenarios.
+3. Implement tests.
+4. Run targeted tests.
+5. Fix failures.
+6. Run related tests.
+7. Report results.
 
-1. Read the complete error.
-2. Identify the root cause.
-3. Determine whether the issue is in:
-   - Application code
-   - Test code
-   - Environment
-4. Fix the root cause.
-5. Re-run the test.
-6. Run the relevant test suite.
+## Failure
 
-Never weaken a test simply to make it pass.
+Never change an assertion simply to make a test pass.
 
-## Regression
-
-When fixing a bug, add a regression test when practical.
+Determine the root cause first.
 
 ## Final Report
 
-Report:
+Include:
 
 - Tests executed
 - Passed
 - Failed
 - Skipped
-- Root cause
+- Root causes
 - Changes made
