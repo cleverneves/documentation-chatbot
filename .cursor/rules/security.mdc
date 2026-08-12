@@ -1,0 +1,81 @@
+---
+description: Security rules for the documentation chatbot frontend and monorepo
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Security
+
+## Secrets
+
+Never commit:
+
+- API keys
+- OpenAI keys
+- Tokens
+- Passwords
+- Credentials
+- Private keys
+
+Use environment variables.
+
+## Frontend Environment
+
+Never expose server-side secrets through frontend environment variables.
+
+Only variables explicitly intended for the browser may be exposed.
+
+## OpenAI
+
+The OpenAI API key must remain on the backend.
+
+The frontend must never call OpenAI directly.
+
+## RAG
+
+The frontend must never directly access:
+
+- ChromaDB
+- Vector store credentials
+- LlamaIndex configuration
+- Embedding providers
+- LLM provider credentials
+
+## User Input
+
+Treat user input as untrusted.
+
+Do not render user-generated content as raw HTML unless there is an explicit sanitization strategy.
+
+## API Errors
+
+Do not expose internal backend details.
+
+Do not display:
+
+- Stack traces
+- SQL errors
+- Provider errors
+- Internal exception messages
+
+## Logging
+
+Do not log:
+
+- API keys
+- Authentication tokens
+- Sensitive user data
+
+## Dependencies
+
+Do not add packages with unclear provenance.
+
+Keep dependencies minimal.
+
+## Environment Files
+
+`.env` files containing secrets must not be committed.
+
+`.env.example` may contain variable names and safe example values.
+
+Never put real credentials in `.env.example`.
