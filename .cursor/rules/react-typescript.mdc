@@ -1,0 +1,171 @@
+---
+description: React and TypeScript coding standards
+globs: ["src/**/*.{ts,tsx}"]
+alwaysApply: true
+---
+
+# React + TypeScript
+
+## React
+
+Use functional components.
+
+Do not use class components.
+
+Prefer named exports for reusable components.
+
+Example:
+
+export function ChatMessage() {
+  return (...);
+}
+
+## Props
+
+Define explicit prop types.
+
+Example:
+
+interface ChatMessageProps {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export function ChatMessage({
+  role,
+  content,
+}: ChatMessageProps) {
+  ...
+}
+
+## TypeScript
+
+Never use `any` to bypass a type problem.
+
+Prefer:
+
+unknown
+
+when a value is genuinely unknown.
+
+Use explicit types for:
+
+- Component props
+- API requests
+- API responses
+- Domain models
+- Custom hook contracts
+
+Prefer type inference when the type is obvious.
+
+## Hooks
+
+Custom hooks must start with:
+
+use
+
+Examples:
+
+useChat()
+useDocuments()
+useDebounce()
+
+Use hooks to encapsulate reusable stateful behavior.
+
+## useEffect
+
+Do not use `useEffect` for derived state.
+
+Prefer calculating derived values during render.
+
+Use effects for synchronization with external systems.
+
+Avoid unnecessary effects.
+
+## State
+
+Prefer:
+
+useState
+
+for local state.
+
+Do not lift state unnecessarily.
+
+Keep state close to the component that consumes it.
+
+## Event Handlers
+
+Use descriptive names.
+
+Preferred:
+
+handleSubmit
+handleSendMessage
+handleRetry
+handleDocumentSelect
+
+Avoid:
+
+handleClick1
+doSomething
+processData
+
+## Lists
+
+Always use stable keys.
+
+Prefer domain identifiers:
+
+key={document.id}
+
+Avoid array indexes as keys unless the list is static.
+
+## Async Operations
+
+Represent asynchronous state explicitly.
+
+Example:
+
+- idle
+- loading
+- success
+- error
+
+The UI must react appropriately to each state.
+
+## Naming
+
+Components:
+
+PascalCase
+
+Examples:
+
+ChatInput.tsx
+ChatMessage.tsx
+SourceList.tsx
+
+Hooks:
+
+useSomething.ts
+
+Services:
+
+chatService.ts
+api.ts
+
+Types:
+
+chat.ts
+document.ts
+
+## File Size
+
+If a component becomes difficult to understand, consider extracting:
+
+- Subcomponents
+- Custom hooks
+- Utility functions
+
+Do not split files merely to reduce line count.
